@@ -1,14 +1,25 @@
-#SteamCMD Workshop Mods Auto Updater for Arma 3 Mods.
+#Valkyrie-AutoUpdate
 #Written By: Caleb 'Crow' Farrell
 #Date: 2020 - 10 - 15
 
 import glob
 import re
 import os
+import time
+import json
+
+#config stuffs
+configFile = 'config.json'
+
+with open(configFile, 'r') as f:
+    datastore = json.load(f)
+
+steamCMDPath = datastore["steamCmdPath"]
+serverPath = datastore["arma3ServerPath"]
+modsRepoPath = datastore["modsRepoPath"]
 
 #Arma 3 SteamID
 appId = '107410'
-
 #Arma3 Server SteamID
 serverAppId = '233780'
 #Arma 3 Workshop Mod ID
@@ -19,11 +30,11 @@ metaFile = "meta.cpp"
 #This should reference where you store all your mods,
 # AGAIN STORE THEM ALL IN A SEPERATE FOLDER
 # AS SAID ABOVE FAILURE TO DO SO WILL CRASH THE SCRIPT
-modStorePath = input("Enter Path to mods store: ")
-print("Path is: " + modStorePath)
+
+print(" Mods Repo Path is: " + modsRepoPath)
 
 #Getting all mod folders
-modFolders = glob.glob(modStorePath + "/*/")
+modFolders = glob.glob(modsRepoPath + "/*/")
 
 print(modFolders)
 
@@ -48,18 +59,16 @@ for i in publishedId:
 
 print(publishedIDs)
 
-#Running the steamCMD with to update Arma server
+#Running the steamCMD to update Arma server
+print(steamCMDPath)
 
-steamCmdPath = input("Define Path to SteamCMD: " )
-print(steamCmdPath)
-
-serverPath = input("Define Path to Arma 3 Server: ")
 print(serverPath)
 
 
+os.system(steamCMDPath+'\\'+'SteamCMD +login anonymous + force_install_dir' + serverPath + '+app_update' + serverAppId + 'validate +quit')
 
-os.system('cd' + steamCmdPath)
-os.system('SteamCMD +login anonymous + force_install_dir' + serverPath + '+app_update' + serverAppId + 'validate +quit')
-
-
+for item in publishedIDs:
+    print(item)
+    os.system(steamCMDPath+'\\'+'SteamCMD +login anonymous + force_install_dir' + serverPath + '+workshop_download_item' + appId + str(item) + 'validate +quit')
+    time.sleep(15)
 
