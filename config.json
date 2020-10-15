@@ -1,8 +1,9 @@
 {
   "steamCmdPath": "C:\\apps\\steam",
   "arma3ServerPath": "C:\\Games\\Arma3\\A3Master",
-  "modsRepoPath": "C:\\Games\\Arma3\\ModRepo"
+  "modsRepoPath": "C:\\Games\\Arma3\\ModRepo",
 
-
-
+  "loggingEnabled": "1",
+  "serverUpdateEnabled": "0",
+  "debuggingMode": "0"
 }
