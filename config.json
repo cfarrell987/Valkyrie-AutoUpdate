@@ -1,7 +1,7 @@
 {
-  "steamCmdPath": "C:\\apps\\steam",
-  "arma3ServerPath": "C:\\Games\\Arma3\\A3Master",
-  "modsRepoPath": "C:\\Games\\Arma3\\ModRepo"
+  "steamCmdPath": "F:\\SteamCMD",
+  "arma3ServerPath": "F:\\SteamLibrary\\steamapps\\common\\Arma 3 Server",
+  "modsRepoPath": "F:\\SteamLibrary\\steamapps\\common\\Arma 3 Server"
 
 
 

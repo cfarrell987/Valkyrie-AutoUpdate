@@ -2,6 +2,11 @@
 #Written By: Caleb 'Crow' Farrell
 #Date: 2020 - 10 - 15
 
+#TODO: Create output log
+#DONE: #TODO: prevent any folder W/O meta.cpp file from crashing the program
+#TODO: allow for both anon and signed in use of SteamCMD
+#TODO: Create a system for users to download new mods by checking a file and referencing it to the array of existing ones
+
 import glob
 import re
 import os
@@ -39,12 +44,15 @@ modFolders = glob.glob(modsRepoPath + "/*/")
 print(modFolders)
 
 #This is reading the meta.cpp for the publisherID and appending it to our array
+
 for item in modFolders:
     print(item)
-    f = open(item + metaFile)
-    lines = (f.readlines())
-    publishedId.append(lines[1])
-
+    if os.path.exists(item +'./' + metaFile):
+        f = open(item + metaFile)
+        lines = (f.readlines())
+        publishedId.append(lines[1])
+    else:
+        print("meta.cpp does not exist in:" + item + "If mod folder please re-download manually ")
 #here we define a new array for the cleansed publisherIDs
 publishedIDs = []
 #Thanks to ZE JEW #9273 on Discord for the assistance on this one!
