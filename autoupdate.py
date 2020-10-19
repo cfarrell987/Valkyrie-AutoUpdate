@@ -3,6 +3,7 @@
 # Date: 2020 - 10 - 15
 
 # TODO: allow for both anon and signed in use of SteamCMD
+# In Progress:
 # TODO: Create a system for users to download new mods by checking a file and referencing it to the array of existing
 
 import glob
@@ -11,6 +12,7 @@ import os
 import time
 import json
 import logging
+import csv
 
 
 # config stuffs
@@ -26,37 +28,32 @@ serverUpdateEnabled = int(datastore["serverUpdateEnabled"])
 debuggingMode = int(datastore["debuggingMode"])
 # Logging Stuffs
 loggingEnabled = int(datastore["loggingEnabled"])
-
 if loggingEnabled == 1:
-
     if not os.path.exists('./logs'):
         os.mkdir('./logs')
-
     logging.basicConfig(format='%(asctime)s %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p', filename='./logs/' + time.strftime("%Y-%m-%d %H-%M-%S_") + 'OUTPUT.log', level=logging.DEBUG)
 else:
     logging.warning("LOGGING IS DISABLED")
 
 logging.info('Initializing...')
+
 # Arma 3 SteamID
 appId = '107410'
 # Arma3 Server SteamID
 serverAppId = '233780'
 # Arma 3 Workshop Mod ID
 publishedId = []
-
+#setting var for meta file
 metaFile = "meta.cpp"
-# This should reference where you store all your mods,
-
-logging.info('Complete!')
 
 print(" Mods Repo Path is: " + modsRepoPath)
+logging.info('Complete!')
 
 # Getting all mod folders
 modFolders = glob.glob(modsRepoPath + "/*/")
 
 print(modFolders)
 # This is reading the meta.cpp for the publisherID and appending it to our array
-
 for item in modFolders:
     print(item)
     if os.path.exists(item + './' + metaFile):
@@ -95,7 +92,16 @@ print(steamCMDPath)
 
 print(serverPath)
 
+# Checking for new mods in CSV, referencing existing publishedIDs to ensure re-download isn't done
+newMods = []
+if not os.path.exists("./newMods.csv"):
+    f = open("./newMods.csv", "x")
 
+else:
+    with open("./newMods.csv", 'r') as file:
+        reader = csv.reader(file)
+        for row in reader:
+            print(row)
 if serverUpdateEnabled == 1:
     os.system(steamCMDPath + '\\' + 'SteamCMD +login anonymous + force_install_dir' + serverPath + '+app_update' + serverAppId + 'validate +quit')
 else:
