@@ -3,6 +3,7 @@
 # Date: 2020 - 10 - 15
 
 # TODO: allow for both anon and signed in use of SteamCMD
+# TODO: parse publishedID from mod URLs
 # In Progress:
 # TODO: Create a system for users to download new mods by checking a file and referencing it to the array of existing
 
